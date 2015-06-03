@@ -48,6 +48,12 @@ def pause():
     req = Request(base_client_uri + "/action?action=pause")
     urlopen(req)
 
+def shuffle():
+    global playing
+    playing = True
+    req = Request(base_client_uri + "/action?action=shuffle")
+    urlopen(req)
+
 def set_max_connect_volume():
     req = Request(base_client_uri + "/action?action=volume&level=65535")
     urlopen(req)
@@ -83,6 +89,7 @@ def check_ready():
             led_on()
             set_max_connect_volume() # max the Spotify connect volume
             #set_volume(y)
+            shuffle()
             play_preset1()
 
 while True:
