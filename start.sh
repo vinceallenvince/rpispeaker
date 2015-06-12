@@ -18,16 +18,19 @@ sleep 5
 statusdata=$(curl --silent http://localhost:15004/status-data)
 
 # start playing to take control
-curl http://localhost:15004/action?action=play
+curl http://localhost:15004/action?action=preset-1
+
+# give the player time to switch to new context if necessary 
+sleep 3
 
 # the string to the right of the =~ operator is considered an extended regular expression
+
 if [[ "$statusdata" =~ '"shuffle_state":"1"' ]]
 then
         echo "got shuffle status: 1"
 else
         echo "got shuffle status: 0"
         curl http://localhost:15004/action?action=shuffle
-        curl http://localhost:15004/action?action=next
 fi
 
 if [[ "$statusdata" =~ '"repeat_state":"1"' ]]
